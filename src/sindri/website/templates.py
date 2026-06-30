@@ -517,29 +517,29 @@ plotLayout_{section_id} = {{
     ],
 }};
 
-var firstUpdate = true;
+var firstUpdate_{section_id} = true;
 var enableQueryParsing = enableQueryParsing || false;
 
-function unpack(data, key) {{
+function unpack_{section_id}(data, key) {{
     if (data.constructor === Array) {{
         return data.map(function(row) {{ return row[key]; }});
     }};
     return data[key];
 }};
 
-function createSubplots(plotid, subplotList, data) {{
+function createSubplots_{section_id}(plotid, subplotList, data) {{
     for (let i = 0; i < subplotList.length; i++) {{
-        subplotList[i].x = unpack(data, "{x_variable}");
-        subplotList[i].y = unpack(data, subplotList[i].name);
+        subplotList[i].x = unpack_{section_id}(data, "{x_variable}");
+        subplotList[i].y = unpack_{section_id}(data, subplotList[i].name);
     }};
     Plotly.newPlot(plotid, subplotList, plotLayout_{section_id}, plotConfig_{section_id});
 }};
 
-function updateSubplots(plotid, subplotList, data) {{
+function updateSubplots_{section_id}(plotid, subplotList, data) {{
     for (let i = 0; i < subplotList.length; i++) {{
         var data = {{}}
-        data["x"] = unpack(data, "{x_variable}");
-        data["y"] = unpack(data, subplotList[i].name);
+        data["x"] = unpack_{section_id}(data, "{x_variable}");
+        data["y"] = unpack_{section_id}(data, subplotList[i].name);
         Plotly.restyle(plotid, data, i);
     }};
 }};
@@ -565,11 +565,11 @@ xhrCheck_{section_id}.onreadystatechange = function() {{
                     window.alert("Data for " + extraPathText + " not available.");
                     return;
                 }};
-                if (firstUpdate) {{
-                    createSubplots("{section_id}-output", subplots_{section_id}, data);
+                if (firstUpdate_{section_id}) {{
+                    createSubplots_{section_id}("{section_id}-output", subplots_{section_id}, data);
                 }} else {{
-                    updateSubplots("{section_id}-output", subplots_{section_id}, data);
-                    firstUpdate = false;
+                    updateSubplots_{section_id}("{section_id}-output", subplots_{section_id}, data);
+                    firstUpdate_{section_id} = false;
                 }};
             }});
         }};
